@@ -26,19 +26,11 @@ export default class CellularAutomaton extends Component<Props> {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.didReset) {
-      this.clearCAArray();
-      this.props.resetedCA();
-    }else if (nextProps.didAppliedRule) {
-      this.setupCA();
-      this.props.changedCARule();
-    }else if (nextProps.willAddNextRow) {
-      this.addCARow();
-    }else if (nextProps.isPaused) {
-      this.clearCAInterval();
-    }else {
-      this.setupCAInterval();
-    }
+    nextProps.didReset       ? (this.clearCAArray(), this.props.resetedCA()) :
+    nextProps.didAppliedRule ? (this.setupCA(), this.props.changedCARule()) :
+    nextProps.willAddNextRow ? this.addCARow() :
+    nextProps.isPaused       ? this.clearCAInterval()
+                             : this.setupCAInterval()
   }
 
   setupCA = () => {
