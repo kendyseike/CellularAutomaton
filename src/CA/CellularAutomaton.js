@@ -26,11 +26,13 @@ export default class CellularAutomaton extends Component<Props> {
   }
 
   componentWillReceiveProps(nextProps) {
-    nextProps.didReset       ? (this.clearCAArray(), this.props.resetedCA()) :
-    nextProps.didAppliedRule ? (this.setupCA(), this.props.changedCARule()) :
-    nextProps.willAddNextRow ? this.addCARow() :
-    nextProps.isPaused       ? this.clearCAInterval()
-                             : this.setupCAInterval()
+    let { generatedCAArray } = this.state
+    nextProps.didReset          ? (this.clearCAArray(), this.props.resetedCA(), this.setupCA()) :
+    nextProps.didAppliedRule    ? (this.setupCA(), this.props.changedCARule()) :
+    nextProps.willAddNextRow    ? this.addCARow() :
+    nextProps.isPaused          ? this.clearCAInterval() :
+    generatedCAArray.length > 0 ? this.setupCAInterval()
+                                : null
   }
 
   setupCA = () => {
@@ -50,15 +52,14 @@ export default class CellularAutomaton extends Component<Props> {
     var { generatedCAArray, index } = this.state;
 
     for (var i = 0; i < this.automata[index].length; i++) {
-      var rowData = <View key={'active'+i.toString()} style={styles.activeCell}></View>;
-      if (this.automata[index][i].state == 0)
-        rowData = <View key={'inactive'+i.toString()} style={styles.inactiveCell}></View>
+      var rowData = this.automata[index][i].state == 0 ? <View key={'inactive'+i.toString()} style={styles.inactiveCell}></View>
+                                                       : <View key={'active'+i.toString()} style={styles.activeCell}></View>;
 
       generatedCAArray.push(rowData);
     }
 
     index = index+1;
-    this.setState({generatedCAArray, index});
+    this.setState({ generatedCAArray, index });
   }
 
   rowComponent = (key, row) => (

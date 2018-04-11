@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import CellularAutomatonControls from './CellularAutomatonControls';
+import CellularAutomatonControls from './src/CA/CellularAutomatonControls';
 
 AppRegistry.registerComponent('nubanktest', () => CellularAutomatonControls);
