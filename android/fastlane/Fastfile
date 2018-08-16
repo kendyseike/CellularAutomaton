@@ -13,7 +13,6 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-
 lane :android do |options|
     gradle(task: "clean assembleRelease",
       properties: {
