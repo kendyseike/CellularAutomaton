@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 platform=$(echo $branch | sed -e 's/.*\(android\).*/\1/' -e 's/.*\(ios\).*/\1/')
 version=$(echo $branch | sed -e 's/.*\([0-9].[0-9].[0-9]\).*/\1/')
